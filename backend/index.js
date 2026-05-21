@@ -64,13 +64,13 @@ async function runStartupMigrations() {
 
 async function ensureDatabase() {
   const connection = await mysql.createConnection({
-    host: process.env.MYSQL_HOST || "127.0.0.1",
-    port: Number(process.env.MYSQL_PORT) || 3306,
-    user: process.env.MYSQL_USER || "root",
-    password: process.env.MYSQL_PASSWORD || "",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
   })
   await connection.query(
-    `CREATE DATABASE IF NOT EXISTS \`${process.env.MYSQL_DATABASE || "taskmanager"}\``
+    `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\``
   )
   await connection.end()
 }
@@ -84,7 +84,7 @@ async function startServer() {
   } catch (err) {
     console.error("Database connection failed:", err.message)
     console.error(
-      "Start MySQL: from project root run  docker compose up -d"
+      "Check DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, and DB_NAME environment variables."
     )
     process.exit(1)
   }
@@ -114,9 +114,9 @@ async function startServer() {
     const statusCode = err.statusCode || 500
     let message = err.message || "Internal Server Error"
 
-    if (message.includes("ECONNREFUSED") && message.includes("3306")) {
+    if (message.includes("ECONNREFUSED")) {
       message =
-        "Database is not running. Start MySQL with: docker compose up -d"
+        "Database connection failed. Check DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, and DB_NAME."
     }
 
     res.status(statusCode).json({ success: false, statusCode, message })
