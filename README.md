@@ -1,4 +1,4 @@
-# Team Task Manager
+# Team Task Manager 
 
 A full-stack web app for managing team projects and tasks. Users sign up, create projects, invite members, assign work, and track progress from a shared dashboard.
 
@@ -10,8 +10,8 @@ Built with React, Node.js, Express, and MySQL. Deployed on Railway.
 
 | | URL |
 |--|-----|
-| Application | `https://your-app.up.railway.app` |
-| GitHub | `https://github.com/your-username/team-task-manager` |
+| Application | https://thriving-inspiration-production-0790.up.railway.app/login|
+| GitHub | https://github.com/Aayush2001-etharaai/Task-Manager.git|
 
 ---
 
